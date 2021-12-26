@@ -24,17 +24,18 @@ namespace RTS.Network
         [SerializeField]
         private Color color = Color.white;
 
-
-        private void HandlePlayerColor(Color old, Color newColor)
+        #region Server
+        [Command]
+        private void CmdSetDisplayName(string newDisplayName)
         {
-            meshRenderer.material.SetColor("_BaseColor", newColor);
-        }
-        private void HandlePlayerName(string old, string newName)
-        {
-            nameText.text = newName;
-        }
+            if (newDisplayName.Length < 3)
+            {
+                return;
+            }
+            RpcLogNewName(newDisplayName);
 
-
+            SetDisplayName(newDisplayName);
+        }
 
         [Server]
         public void SetDisplayName(string name)
@@ -47,5 +48,31 @@ namespace RTS.Network
         {
             this.color = color;
         }
+        #endregion
+
+        #region  Client
+        private void HandlePlayerColor(Color old, Color newColor)
+        {
+            meshRenderer.material.SetColor("_BaseColor", newColor);
+        }
+        private void HandlePlayerName(string old, string newName)
+        {
+            nameText.text = newName;
+        }
+        [ContextMenu("Set My Name")]
+        private void SetMyName()
+        {
+            CmdSetDisplayName("My New Name");
+        }
+
+        [ClientRpc]
+        private void RpcLogNewName(string newDisplayName)
+        {
+            Debug.Log(newDisplayName);
+        }
+
+
+        #endregion
+
     }
 }
