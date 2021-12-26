@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7775469715700358164}
   - component: {fileID: 7871048925011340729}
   - component: {fileID: 7849194067720854111}
+  - component: {fileID: 8421370328840833885}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -69,6 +70,35 @@ MonoBehaviour:
   nameText: {fileID: 277974102423978142}
   displayName: Name
   color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &8421370328840833885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331461313432831874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 1
+  showOverlay: 1
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &3472735807605000067
 GameObject:
   m_ObjectHideFlags: 0
