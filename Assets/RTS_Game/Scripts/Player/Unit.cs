@@ -10,10 +10,14 @@ namespace RTS.Player
     public class Unit : NetworkBehaviour
     {
         [SerializeField]
+        private UnitMovement unitMovement;
+        [SerializeField]
         private UnityEvent onSelected;
 
         [SerializeField]
         private UnityEvent onDeselected;
+
+        public UnitMovement GetUnitMovement() => unitMovement;
 
         #region  Client
         [Client]
@@ -29,6 +33,7 @@ namespace RTS.Player
             if (!hasAuthority) { return; }
             onDeselected?.Invoke();
         }
+
         #endregion
     }
 }
