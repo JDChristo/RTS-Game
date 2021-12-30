@@ -50,7 +50,10 @@ namespace RTS.Player
         }
         private void StartSelectionArea()
         {
-            DeselectUnits();
+            if (!Keyboard.current.leftShiftKey.isPressed)
+            {
+                DeselectUnits();
+            }
             selectionBox.gameObject.SetActive(true);
             startPosition = Mouse.current.position.ReadValue();
             UpdateSelectionArea();
@@ -89,6 +92,8 @@ namespace RTS.Player
 
             foreach (Unit unit in player.MyUnits)
             {
+                if (SelectedUnits.Contains(unit)) { continue; }
+
                 Vector3 screenPosition = mainCamera.WorldToScreenPoint(unit.transform.position);
                 if (screenPosition.x > min.x && screenPosition.x < max.x &&
                     screenPosition.y > min.y && screenPosition.y < max.y)

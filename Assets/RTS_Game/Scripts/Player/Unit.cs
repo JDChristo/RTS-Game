@@ -6,12 +6,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Mirror;
+using RTS.Combat;
+
 namespace RTS.Player
 {
     public class Unit : NetworkBehaviour
     {
         [SerializeField]
         private UnitMovement unitMovement;
+        [SerializeField]
+        private Targeter targeter;
         [SerializeField]
         private UnityEvent onSelected;
 
@@ -25,6 +29,7 @@ namespace RTS.Player
         public static event Action<Unit> AuthorityOnUnitDespawned;
 
         public UnitMovement GetUnitMovement() => unitMovement;
+        public Targeter Targeter => targeter;
 
         #region Server
         public override void OnStartServer()
