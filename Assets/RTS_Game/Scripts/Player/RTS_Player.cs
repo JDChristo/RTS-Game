@@ -38,11 +38,11 @@ namespace RTS.Player
         }
 
         #region Client
-        public override void OnStartClient()
+        public override void OnStartAuthority()
         {
             base.OnStartClient();
 
-            if (!isClientOnly) { return; }
+            if (NetworkServer.active) { return; }
             Unit.AuthorityOnUnitSpawned += AuthorityUnitSpawned;
             Unit.AuthorityOnUnitDespawned += AuthorityUnitDespawned;
         }
@@ -50,7 +50,7 @@ namespace RTS.Player
         {
             base.OnStopClient();
 
-            if (!isClientOnly) { return; }
+            if (!isClientOnly || !hasAuthority) { return; }
             Unit.AuthorityOnUnitSpawned -= AuthorityUnitSpawned;
             Unit.AuthorityOnUnitDespawned -= AuthorityUnitDespawned;
         }
@@ -58,12 +58,10 @@ namespace RTS.Player
 
         private void AuthorityUnitSpawned(Unit unit)
         {
-            if (!hasAuthority) { return; }
             MyUnits.Add(unit);
         }
         private void AuthorityUnitDespawned(Unit unit)
         {
-            if (!hasAuthority) { return; }
             MyUnits.Remove(unit);
         }
 

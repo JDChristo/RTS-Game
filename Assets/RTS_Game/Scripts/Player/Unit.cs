@@ -15,6 +15,8 @@ namespace RTS.Player
         [SerializeField]
         private UnitMovement unitMovement;
         [SerializeField]
+        private Health health;
+        [SerializeField]
         private Targeter targeter;
         [SerializeField]
         private UnityEvent onSelected;
@@ -28,7 +30,7 @@ namespace RTS.Player
         public static event Action<Unit> AuthorityOnUnitSpawned;
         public static event Action<Unit> AuthorityOnUnitDespawned;
 
-        public UnitMovement GetUnitMovement() => unitMovement;
+        public UnitMovement UnitMovement => unitMovement;
         public Targeter Targeter => targeter;
 
         #region Server
@@ -36,27 +38,32 @@ namespace RTS.Player
         {
             base.OnStartServer();
             ServerOnUnitSpawned?.Invoke(this);
+            health.ServerOnDie += Die;
         }
         public override void OnStopServer()
         {
             base.OnStopServer();
             ServerOnUnitDespawned?.Invoke(this);
+            health.ServerOnDie -= Die;
+        }
+        [Server]
+        private void Die()
+        {
+            NetworkServer.Destroy(gameObject);
         }
         #endregion
 
         #region  Client
-        public override void OnStartClient()
+        public override void OnStartAuthority()
         {
-            base.OnStartClient();
-
-            if (!isClientOnly || !hasAuthority) { return; }
+            base.OnStartAuthority();
             AuthorityOnUnitSpawned?.Invoke(this);
         }
         public override void OnStopClient()
         {
             base.OnStopClient();
 
-            if (!isClientOnly || !hasAuthority) { return; }
+            if (!hasAuthority) { return; }
             AuthorityOnUnitDespawned?.Invoke(this);
         }
 

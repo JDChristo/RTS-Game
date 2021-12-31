@@ -4,6 +4,8 @@ using UnityEngine;
 
 using Mirror;
 
+using RTS.Game;
+
 namespace RTS.Combat
 {
     public class Targeter : NetworkBehaviour
@@ -11,13 +13,25 @@ namespace RTS.Combat
         [SerializeField]
         private Targetable target;
 
+        public Targetable Target => target;
+
         #region  Server
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            GameOverHandler.ServerOnGameOver += ServerOnGameOver;
+        }
+
+        public override void OnStopServer()
+        {
+            GameOverHandler.ServerOnGameOver -= ServerOnGameOver;
+        }
         [Command]
         public void CmdSetTarget(GameObject targetGameObject)
         {
-            if (!targetGameObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
+            if (!targetGameObject.TryGetComponent<Targetable>(out Targetable newTarget)) { return; }
 
-            this.target = target;
+            this.target = newTarget;
         }
 
         [Server]
@@ -25,10 +39,12 @@ namespace RTS.Combat
         {
             target = null;
         }
+        [Server]
+        private void ServerOnGameOver()
+        {
+            ClearTarget();
+        }
         #endregion
 
-        #region  Client
-
-        #endregion
     }
 }

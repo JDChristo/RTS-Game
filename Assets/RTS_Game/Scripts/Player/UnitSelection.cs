@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using Mirror;
+
+using RTS.Game;
+
 namespace RTS.Player
 {
     public class UnitSelection : MonoBehaviour
@@ -25,6 +28,13 @@ namespace RTS.Player
             mainCamera = Camera.main;
             player = NetworkClient.connection.identity.GetComponent<RTS_Player>();
             selectionBox.gameObject.SetActive(false);
+            Unit.AuthorityOnUnitDespawned += AuthorityOnUnitDespawned;
+            GameOverHandler.ClientOnGameOver += ClientOnGameOver;
+        }
+        private void OnDestroy()
+        {
+            Unit.AuthorityOnUnitDespawned -= AuthorityOnUnitDespawned;
+            GameOverHandler.ClientOnGameOver -= ClientOnGameOver;
         }
 
         private void Update()
@@ -47,6 +57,10 @@ namespace RTS.Player
                 UpdateSelectionArea();
             }
 
+        }
+        private void ClientOnGameOver(string winner)
+        {
+            enabled = false;
         }
         private void StartSelectionArea()
         {
@@ -117,6 +131,11 @@ namespace RTS.Player
             {
                 selectedUnit.Select();
             }
+        }
+
+        private void AuthorityOnUnitDespawned(Unit unit)
+        {
+            SelectedUnits.Remove(unit);
         }
     }
 }

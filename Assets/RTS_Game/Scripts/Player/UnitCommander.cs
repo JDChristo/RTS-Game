@@ -4,6 +4,8 @@ using RTS.Combat;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using RTS.Game;
+
 namespace RTS.Player
 {
     public class UnitCommander : MonoBehaviour
@@ -17,6 +19,11 @@ namespace RTS.Player
         private void Start()
         {
             mainCamera = Camera.main;
+            GameOverHandler.ClientOnGameOver += ClientGameOver;
+        }
+        private void OnDestroy()
+        {
+            GameOverHandler.ClientOnGameOver -= ClientGameOver;
         }
         private void Update()
         {
@@ -40,7 +47,7 @@ namespace RTS.Player
         {
             foreach (var unit in unitSelectionHandler.SelectedUnits)
             {
-                unit.GetUnitMovement().CmdMove(position);
+                unit.UnitMovement.CmdMove(position);
             }
         }
 
@@ -50,6 +57,10 @@ namespace RTS.Player
             {
                 unit.Targeter.CmdSetTarget(target.gameObject);
             }
+        }
+        private void ClientGameOver(string winner)
+        {
+            enabled = false;
         }
     }
 }
