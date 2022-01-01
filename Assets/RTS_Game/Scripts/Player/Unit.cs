@@ -13,6 +13,8 @@ namespace RTS.Player
     public class Unit : NetworkBehaviour
     {
         [SerializeField]
+        private int resourceCost = 10;
+        [SerializeField]
         private UnitMovement unitMovement;
         [SerializeField]
         private Health health;
@@ -32,6 +34,7 @@ namespace RTS.Player
 
         public UnitMovement UnitMovement => unitMovement;
         public Targeter Targeter => targeter;
+        public int ResourceCost => resourceCost;
 
         #region Server
         public override void OnStartServer()
