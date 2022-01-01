@@ -12,10 +12,10 @@ TagManager:
   - Water
   - UI
   - PlayerUnit
-  - Walkable
-  - 
-  - 
-  - 
+  - Floor
+  - Terrain
+  - Projectile
+  - Minimap
   - 
   - 
   - 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2393557840488787688}
   - component: {fileID: 8785282267311026633}
   - component: {fileID: 2272636911813760156}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,6 +96,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rb: {fileID: 8785282267311026633}
+  damageToDeal: 20
   lifeTime: 5
   launchForce: 10
 --- !u!1 &2393557841287297293
@@ -109,7 +110,7 @@ GameObject:
   - component: {fileID: 2393557841287297281}
   - component: {fileID: 2393557841287297282}
   - component: {fileID: 2393557841287297283}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

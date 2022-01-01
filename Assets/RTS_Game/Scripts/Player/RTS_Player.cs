@@ -4,11 +4,16 @@ using UnityEngine;
 
 using Mirror;
 
+using RTS.Building;
+
 namespace RTS.Player
 {
     public class RTS_Player : NetworkBehaviour
     {
-        public List<Unit> MyUnits { get; } = new List<Unit>();
+        [SerializeField]
+        private UnitBuilding[] buildings = new UnitBuilding[0];
+        public List<Unit> MyUnits { get; private set; } = new List<Unit>();
+        public List<UnitBuilding> MyBuilding { get; private set; } = new List<UnitBuilding>();
 
         #region Server
         public override void OnStartServer()
@@ -16,6 +21,9 @@ namespace RTS.Player
             base.OnStartServer();
             Unit.ServerOnUnitSpawned += ServerUnitSpawned;
             Unit.ServerOnUnitDespawned += ServerUnitDespawned;
+
+            UnitBuilding.ServerOnBuildingSpawned += ServerBuildingSpawned;
+            UnitBuilding.ServerOnBuildingDespawned += ServerBuildingDespawned;
         }
 
         public override void OnStopServer()
@@ -23,8 +31,29 @@ namespace RTS.Player
             base.OnStopServer();
             Unit.ServerOnUnitSpawned -= ServerUnitSpawned;
             Unit.ServerOnUnitDespawned -= ServerUnitDespawned;
+
+            UnitBuilding.ServerOnBuildingSpawned -= ServerBuildingSpawned;
+            UnitBuilding.ServerOnBuildingDespawned -= ServerBuildingDespawned;
         }
-        #endregion
+        [Command]
+        public void CmdSpawnBuilding(int buildingID, Vector3 spawnPosition)
+        {
+            UnitBuilding buildingToPlace = null;
+
+            foreach (UnitBuilding building in buildings)
+            {
+                if (building.ID == buildingID)
+                {
+                    buildingToPlace = building;
+                    break;
+                }
+            }
+
+            if (buildingToPlace == null) { return; }
+
+            GameObject buildingIns = Instantiate(buildingToPlace.gameObject, spawnPosition, buildingToPlace.transform.rotation);
+            NetworkServer.Spawn(buildingIns, connectionToClient);
+        }
 
         private void ServerUnitSpawned(Unit unit)
         {
@@ -37,6 +66,18 @@ namespace RTS.Player
             MyUnits.Remove(unit);
         }
 
+        private void ServerBuildingSpawned(UnitBuilding building)
+        {
+            if (building.connectionToClient.connectionId != connectionToClient.connectionId) { return; }
+            MyBuilding.Add(building);
+        }
+        private void ServerBuildingDespawned(UnitBuilding building)
+        {
+            if (building.connectionToClient.connectionId != connectionToClient.connectionId) { return; }
+            MyBuilding.Remove(building);
+        }
+        #endregion
+
         #region Client
         public override void OnStartAuthority()
         {
@@ -45,6 +86,9 @@ namespace RTS.Player
             if (NetworkServer.active) { return; }
             Unit.AuthorityOnUnitSpawned += AuthorityUnitSpawned;
             Unit.AuthorityOnUnitDespawned += AuthorityUnitDespawned;
+
+            UnitBuilding.AuthorityOnBuildingSpawned += AuthorityOnBuildingSpawned;
+            UnitBuilding.AuthorityOnBuildingDespawned += AuthorityOnBuildingDespawned;
         }
         public override void OnStopClient()
         {
@@ -53,6 +97,9 @@ namespace RTS.Player
             if (!isClientOnly || !hasAuthority) { return; }
             Unit.AuthorityOnUnitSpawned -= AuthorityUnitSpawned;
             Unit.AuthorityOnUnitDespawned -= AuthorityUnitDespawned;
+
+            UnitBuilding.AuthorityOnBuildingSpawned -= AuthorityOnBuildingSpawned;
+            UnitBuilding.AuthorityOnBuildingDespawned -= AuthorityOnBuildingDespawned;
         }
         #endregion
 
@@ -65,5 +112,13 @@ namespace RTS.Player
             MyUnits.Remove(unit);
         }
 
+        private void AuthorityOnBuildingSpawned(UnitBuilding building)
+        {
+            MyBuilding.Add(building);
+        }
+        private void AuthorityOnBuildingDespawned(UnitBuilding building)
+        {
+            MyBuilding.Remove(building);
+        }
     }
 }
