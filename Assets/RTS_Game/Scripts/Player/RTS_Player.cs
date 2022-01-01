@@ -5,6 +5,7 @@ using UnityEngine;
 using Mirror;
 
 using RTS.Building;
+using System;
 
 namespace RTS.Player
 {
@@ -12,8 +13,20 @@ namespace RTS.Player
     {
         [SerializeField]
         private UnitBuilding[] buildings = new UnitBuilding[0];
+
+        [SyncVar(hook = nameof(ClientResourcesUpdated))]
+        private int resources = 200;
+
         public List<Unit> MyUnits { get; private set; } = new List<Unit>();
         public List<UnitBuilding> MyBuilding { get; private set; } = new List<UnitBuilding>();
+        public event Action<int> ClientOnResourcesUpdated;
+        public int Resources => resources;
+
+        [Server]
+        public void SetResources(int value)
+        {
+            resources = value;
+        }
 
         #region Server
         public override void OnStartServer()
@@ -101,7 +114,6 @@ namespace RTS.Player
             UnitBuilding.AuthorityOnBuildingSpawned -= AuthorityOnBuildingSpawned;
             UnitBuilding.AuthorityOnBuildingDespawned -= AuthorityOnBuildingDespawned;
         }
-        #endregion
 
         private void AuthorityUnitSpawned(Unit unit)
         {
@@ -120,5 +132,11 @@ namespace RTS.Player
         {
             MyBuilding.Remove(building);
         }
+
+        private void ClientResourcesUpdated(int oldResources, int newResources)
+        {
+            ClientOnResourcesUpdated?.Invoke(newResources);
+        }
+        #endregion
     }
 }
