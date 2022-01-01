@@ -66,6 +66,7 @@ namespace RTS.Player
         [Server]
         private void ServerOnGameOver()
         {
+            agent.isStopped = true;
             agent.ResetPath();
         }
         #endregion

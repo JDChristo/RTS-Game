@@ -115,8 +115,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResourcesGeneratorPreview
       objectReference: {fileID: 0}
+    - target: {fileID: 7047810282394350593, guid: 712a91aee64535c499d079ff210ea9c1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 712a91aee64535c499d079ff210ea9c1, type: 3}
+--- !u!23 &6199878026292552265 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8331747054637387971, guid: 712a91aee64535c499d079ff210ea9c1, type: 3}
+  m_PrefabInstance: {fileID: 2714030078487655050}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4892582699581655333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -208,6 +217,14 @@ PrefabInstance:
       propertyPath: buildingPreview
       value: 
       objectReference: {fileID: 7047810282394350593, guid: 712a91aee64535c499d079ff210ea9c1, type: 3}
+    - target: {fileID: 5295668629251845335, guid: 1b43a2b8ec200754e8ee04b27399b651, type: 3}
+      propertyPath: colorRenderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5295668629251845335, guid: 1b43a2b8ec200754e8ee04b27399b651, type: 3}
+      propertyPath: colorRenderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 6199878026292552265}
     - target: {fileID: 5868087575465707850, guid: 1b43a2b8ec200754e8ee04b27399b651, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 1.313

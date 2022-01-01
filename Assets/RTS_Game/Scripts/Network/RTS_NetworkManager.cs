@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 
 using RTS.Game;
+using RTS.Player;
 
 namespace RTS.Network
 {
@@ -19,6 +20,12 @@ namespace RTS.Network
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             base.OnServerAddPlayer(conn);
+            RTS_Player player = conn.identity.GetComponent<RTS_Player>();
+            player.SetTeamColor(new Color(
+                Random.value,
+                Random.value,
+                Random.value
+            ));
 
             GameObject spawner = Instantiate(unitSpawnerPrefab, conn.identity.transform.position, conn.identity.transform.rotation);
             NetworkServer.Spawn(spawner, conn);

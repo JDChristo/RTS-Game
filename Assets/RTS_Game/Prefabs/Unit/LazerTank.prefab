@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 5587508515491284028}
   - component: {fileID: 1844995359973087322}
   - component: {fileID: 4546769212032441779}
+  - component: {fileID: 6122303070678372113}
   m_Layer: 6
   m_Name: LazerTank
   m_TagString: Untagged
@@ -240,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  resourceCost: 10
   unitMovement: {fileID: 4817494394592425156}
   health: {fileID: 1844995359973087322}
   targeter: {fileID: 6514294084489867994}
@@ -353,6 +355,22 @@ MonoBehaviour:
   health: {fileID: 1844995359973087322}
   healthParent: {fileID: 3540471715082370174}
   healthBarImage: {fileID: 3540471713999177996}
+--- !u!114 &6122303070678372113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2975811765803699554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1544e03199bade943b0ad0d20c0acd7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  colorRenderers:
+  - {fileID: 4507435450061362475}
 --- !u!1 &6074367866628026360
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +499,11 @@ PrefabInstance:
 --- !u!4 &2975811765174062475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2730360893263242068, guid: 9cf6d3315aabfe34eb7e3a814eb6481a, type: 3}
+  m_PrefabInstance: {fileID: 911985300458319583}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4507435450061362475 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3613476131708812276, guid: 9cf6d3315aabfe34eb7e3a814eb6481a, type: 3}
   m_PrefabInstance: {fileID: 911985300458319583}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8540140793843384093

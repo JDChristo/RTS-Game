@@ -21,16 +21,13 @@ namespace RTS.Player
         [SyncVar(hook = nameof(ClientResourcesUpdated))]
         private int resources = 200;
 
+        private Color teamColor = new Color();
         public List<Unit> MyUnits { get; private set; } = new List<Unit>();
         public List<UnitBuilding> MyBuilding { get; private set; } = new List<UnitBuilding>();
         public event Action<int> ClientOnResourcesUpdated;
         public int Resources => resources;
+        public Color TeamColor => teamColor;
 
-        [Server]
-        public void SetResources(int value)
-        {
-            resources = value;
-        }
 
         public bool CanPlaceBuilding(BoxCollider buildingCollider, Vector3 spawnPoint)
         {
@@ -73,6 +70,16 @@ namespace RTS.Player
 
             UnitBuilding.ServerOnBuildingSpawned -= ServerBuildingSpawned;
             UnitBuilding.ServerOnBuildingDespawned -= ServerBuildingDespawned;
+        }
+        [Server]
+        public void SetResources(int value)
+        {
+            resources = value;
+        }
+        [Server]
+        public void SetTeamColor(Color color)
+        {
+            teamColor = color;
         }
         [Command]
         public void CmdSpawnBuilding(int buildingID, Vector3 spawnPosition)
