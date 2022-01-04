@@ -12,6 +12,8 @@ namespace RTS.Player
     public class RTS_Player : NetworkBehaviour
     {
         [SerializeField]
+        private Transform cameraTransform;
+        [SerializeField]
         private float buildingRangeLimit = 5;
         [SerializeField]
         private LayerMask buildingBlockLayer;
@@ -25,6 +27,7 @@ namespace RTS.Player
         public List<Unit> MyUnits { get; private set; } = new List<Unit>();
         public List<UnitBuilding> MyBuilding { get; private set; } = new List<UnitBuilding>();
         public event Action<int> ClientOnResourcesUpdated;
+        public Transform CameraTransform => cameraTransform;
         public int Resources => resources;
         public Color TeamColor => teamColor;
 
