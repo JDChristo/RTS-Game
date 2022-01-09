@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,18 +17,30 @@ namespace RTS.Network
         private GameObject unitSpawnerPrefab = null;
         [SerializeField]
         private GameOverHandler gameOverHandlerPrefab = null;
+
+        public static event Action ClientOnConnected;
+        public static event Action ClientOnDisconnected;
+
+        public override void OnClientConnect(NetworkConnection conn)
+        {
+            base.OnClientConnect(conn);
+            ClientOnConnected?.Invoke();
+        }
+        public override void OnClientDisconnect(NetworkConnection conn)
+        {
+            base.OnClientDisconnect(conn);
+            ClientOnDisconnected?.Invoke();
+        }
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             base.OnServerAddPlayer(conn);
             RTS_Player player = conn.identity.GetComponent<RTS_Player>();
             player.SetTeamColor(new Color(
-                Random.value,
-                Random.value,
-                Random.value
+               UnityEngine.Random.value,
+               UnityEngine.Random.value,
+                UnityEngine.Random.value
             ));
 
-            GameObject spawner = Instantiate(unitSpawnerPrefab, conn.identity.transform.position, conn.identity.transform.rotation);
-            NetworkServer.Spawn(spawner, conn);
         }
         public override void OnServerSceneChanged(string newSceneName)
         {

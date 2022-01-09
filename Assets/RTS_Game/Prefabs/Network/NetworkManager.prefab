@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3668574469173243380}
   - component: {fileID: 3668574469173243383}
   - component: {fileID: 3668574469173243382}
-  - component: {fileID: 3668574469173243381}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -61,11 +60,11 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 6137478363375272996, guid: 3f45623dddef40c488d913ea1823817a, type: 3}
-  - {fileID: 2975811765803699554, guid: 8a7dc46dfc44dae40899da2531cbbc07, type: 3}
-  - {fileID: 2393557840488787691, guid: 72fdd476e6f2fbd4fb8ae7bbc47346e1, type: 3}
   - {fileID: 6951075839846153472, guid: 228589d53ad834b4da5fea3abd52fe51, type: 3}
-  - {fileID: 6137478363375272996, guid: 7d23da5e18422ba4f8bc8124d9b5aa14, type: 3}
   - {fileID: 6137478363375272996, guid: c27464087b965534ca5f943990357849, type: 3}
+  - {fileID: 902640953948341060, guid: f67733ec110d51e44a1744ffd4f10c57, type: 3}
+  - {fileID: 3769844195257507482, guid: 3c7bd4f9d60eff54989381122f43fc28, type: 3}
+  - {fileID: 4674128023046861742, guid: 3559902735a9f974d8dec56536f0a0a1, type: 3}
   unitSpawnerPrefab: {fileID: 6137478363375272996, guid: 3f45623dddef40c488d913ea1823817a, type: 3}
   gameOverHandlerPrefab: {fileID: 6951075839846153473, guid: 228589d53ad834b4da5fea3abd52fe51, type: 3}
 --- !u!114 &3668574469173243382
@@ -93,17 +92,3 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &3668574469173243381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3668574469173243379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
